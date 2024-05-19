@@ -1,118 +1,135 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import { StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react'
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+export default function App() {
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const [randomBackground, setRandomBackground] = useState("black")
+const [boxOne, setBoxOne] = useState("white")
+const [boxTwo, setBoxTwo] = useState("white")
+const [boxThree, setBoxThree] = useState("white")
+const [boxFour, setBoxFour] = useState("white")
+const [circleOne, setCircleOne] = useState("white")
+const [circleTwo, setCircleTwo] = useState("white")
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+const generateColor = () => {
+  const hexRange = "0123456789ABCDEF"
+  let color = "#"
+  for (let i = 0; i<6; i++){
+     color += hexRange[Math.floor(Math.random()*16)] 
+  }
+  return color
 }
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+const RandomBackground = () => {
+  let val = generateColor()
+  setRandomBackground(val)
+}
+const BoxOne = () => {
+  let val = generateColor()
+  setBoxOne(val)
+}
+const BoxTwo = () => {
+  let val = generateColor()
+  setBoxTwo(val)
+}
+const BoxThree = () => {
+  let val = generateColor()
+  setBoxThree(val)
+}
+const BoxFour = () => {
+  let val = generateColor()
+  setBoxFour(val)
+}
+const CircleOne = () => {
+  let val = generateColor()
+  setCircleOne(val)
+}
+const CircleTwo = () => {
+  let val = generateColor()
+  setCircleTwo(val)
+}
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+const handlePress = () => {
+  RandomBackground();
+  BoxOne(); 
+  BoxTwo(); 
+  BoxThree(); 
+  BoxFour(); 
+  CircleOne();
+  CircleTwo(); 
+}
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+    <>
+    <StatusBar backgroundColor={randomBackground}/>
+    <View style={[styles.container, {backgroundColor: randomBackground}]}>
+      <View style={styles.firstContainer}>
+      <View style={[styles.item, {backgroundColor: boxOne}]}></View>
+      <View style={[styles.itemE, {backgroundColor: circleOne}]}></View>
+      <View style={[styles.item, {backgroundColor: boxTwo}]}></View>
+      </View>
+
+      <TouchableOpacity onPress={handlePress}>
+        <View style={styles.actionBtn}>
+      <Text style={styles.actionBtnTxt}>Press Me</Text>
+      </View>
+      </TouchableOpacity>
+
+      <View style={styles.secondContainer}>
+      <View style={[styles.item, {backgroundColor: boxThree}]}></View>
+      <View style={[styles.itemT, {backgroundColor: circleTwo}]}></View>
+      <View style={[styles.item, {backgroundColor: boxFour}]}></View>
+      </View>
+      
+    </View>
+    </>
+  )
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
   },
-  sectionTitle: {
+  actionBtn: {
+    borderRadius: 12,
+    backgroundColor: "grey",
+    paddingVertical: 10,
+    paddingHorizontal: 40,
+    margin: 40
+  },
+  actionBtnTxt: {
     fontSize: 24,
-    fontWeight: '600',
+    color: "white",
+    textTransform: "uppercase"
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  firstContainer: {
+    height: '40%',
+    alignItems: 'center',
+    flexDirection: "row",
   },
-  highlight: {
-    fontWeight: '700',
+  secondContainer: {
+    height: '40%',
+    alignItems: 'center',
+    flexDirection: "row",
   },
-});
-
-export default App;
+  item: {
+    height: '33%',
+    width: '33%',
+    borderRadius: 8
+  },
+  itemE: {
+    height: 100,
+    width: 100,
+    borderRadius: 50,
+    alignSelf: 'flex-end'
+  },
+  itemT: {
+    height: 100,
+    width: 100,
+    borderRadius: 50,
+    alignSelf: 'flex-start'
+  }
+  }
+)
